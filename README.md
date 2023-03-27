@@ -1,27 +1,29 @@
 # Diff-SVC
 Singing Voice Conversion via diffusion model
 
-## 코드 구동을 위한 프로그램 설치 및 코드, 체크포인트 다운로드
+[![Video Label](https://i9.ytimg.com/vi_webp/0zHZ6WwA24E/mq2.webp?sqp=CKychaEG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFcgYChlMA8=&rs=AOn4CLBsTLXFNDFhQapG5qOU_f4J1fEgrw)](https://youtu.be/0zHZ6WwA24E)
+
+## 프로그램 설치 및 코드, 체크포인트 다운로드
 1. 아나콘다3 설치 (https://www.anaconda.com/products/distribution)
-    - 설치 중간에 PATH환경변수에 추가하겠냐는 질문이 있는데, 이 단계에서 등록하는게 마음이 편함
+    - 설치 과정에서 PATH환경변수 등록하기
 2. ffmpeg 설치 (https://www.gyan.dev/ffmpeg/builds/)
-    - 압축해제한 폴더/bin 을 PATH환경변수에 추가해줘야 함
+    - 압축해제한 폴더/bin 을 PATH환경변수에 추가하기
 3. CUDA 11.6 설치 (https://developer.nvidia.com/cuda-11-6-2-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local)
-    - 재시작이 있을 수 있음
+    - 설치 완료 후 시스템 재부팅하기
 4. 현재 repository를 .zip으로 다운로드
-    - 압축해제 경로 전체에 한글이 없는게 좋음
+    - 압축해제 경로 전체에 한글 쓰지 않기
     - 압축해제하면 diff-svc-main 폴더가 생김
-5. Hubert checkpoint 다운로드 (Hubert ckpt 파일은 나에게 저작권이 없으니 나한테 달라고 하지마셈)
+5. 사전학습된 Hubert checkpoint 다운로드
     - 아래 디스코드채널에 들어가기
     - verification step 통과
     - 왼쪽 채널중에 ARCHIVE - pre-trained-model 채널에 들어가기
     - 맨위에 451.48MB짜리 드라이브 링크가 있음 (mega.nz/~~로 시작)
     - folder 다운로드 받기
-    - 위에서 압축해제한 폴더로 옮겨서 "여기에 압축해제" 해버리기
+    - 위 폴더에서 압축해제
 
 ## 학습환경 세팅
 1. anaconda prompt를 관리자 권한으로 열기
-2. 프로젝트 폴더로 이동 (님이 어디에 압축풀었는지에 따라 다름)
+2. 프로젝트 폴더로 이동
     ```
     cd /path/to/project/diff-svc-main/
     ```
@@ -31,13 +33,13 @@ Singing Voice Conversion via diffusion model
     # 설치 뭐 많이할거임 엔터누르고 설치 끝날때 까지 대기
     conda activate diff-svc
     ```
-4. library 설치 (이것도 설치 뭐 많이할거임 엔터엔터하면 댐)
+4. library 설치
     ```
     conda install pytorch-cuda=11.6 -c pytorch -c nvidia
     conda install pytorch torchvision torchaudio -c pytorch -c nvidia
     pip install -r requirements.txt
     ```
-5. 환경 변수 세팅
+5. 환경변수 세팅 (나중에 종료된 학습을 이어나갈 때도 해야 합니다)
     ```
     # 라이브러리 불러올때 용이하게 하려고 추가
     set PYTHONPATH=.
@@ -45,10 +47,10 @@ Singing Voice Conversion via diffusion model
     set CUDA_VISIBLE_DEVICES=0
     ```
 ## 학습용 데이터 준비
-### 인공지능 학습에 있어서 데이터셋의 중요도는 80%이상, 데이터셋의 퀄리티가 곧 모델 결과의 퀄리티와 직결된다고 보면 됨
-1. wav파일이나 mp4파일을 준비해서 프로젝트 폴더에 "preprocess"폴더를 만들고 거기 안에다가 다 넣어준다. 파일 개수가 많아도 상관없고, wav, mp4파일 섞여있어도 상관은 없는데 파일 이름에 공백이랑 한글이 없어야함. (**이 파일들의 퀄리티에 따라 모델의 결과가 달라짐**)
-2. wav파일이나 mp4파일이 길어도 상관없음, 전처리단계에서 12초 내외로 다 알아서 잘라줄거기 때문에 (물론 직접 정성들여 잘라만드는게 성능이 좋긴한데 너무 귀찮음)
-    1. 준비한 데이터들이 배경음이 모두 제거되어 학습하고자하는 사람의 목소리만 있는 경우에는 sep_wav.py파일의 276번째 줄의 use_extract를 False로 바꿔주면된다. use_extract는 배경음을 자동으로 지워주는 함수를 적용할 것인지 여부를 결정하는 변수이다.
+### 데이터셋의 중요도는 90% 이상, Garbage in Garbage out!
+1. wav파일이나 mp4파일을 준비해 프로젝트 폴더에 "preprocess"폴더를 만들고 다 넣어준다. 파일 개수가 많아도 상관없고, wav, mp4파일 섞여있어도 상관은 없는데 파일 이름에 공백이랑 한글이 없어야 합니다.
+2. wav파일이나 mp4파일이 길어도 괜찮습니다. 전처리단계에서 15초 이내로 다 잘라주기 때문 (물론 직접 정성들여 자르는게 성능은 더 좋다고 합니다)
+    1. 준비한 데이터들이 배경음이 모두 제거되어 학습하고자하는 사람의 목소리만 있는 경우에는 sep_wav.py파일의 276번째 줄의 use_extract를 False로 바꿔주면 된다. use_extract는 배경음을 자동으로 지워주는 함수를 적용할 것인지 여부를 결정하는 변수이다.
         ```
         use_extract = False
         ```
