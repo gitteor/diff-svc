@@ -1,8 +1,12 @@
 # Diff-SVC
-Singing Voice Conversion via diffusion model
+### Singing Voice Conversion via diffusion model
+
+　
 
 [![Video Label](https://i9.ytimg.com/vi_webp/0zHZ6WwA24E/mq2.webp?sqp=CKychaEG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFcgYChlMA8=&rs=AOn4CLBsTLXFNDFhQapG5qOU_f4J1fEgrw)](https://youtu.be/0zHZ6WwA24E)
 
+음성데이터 2시간, RTX3060 12GB BatchSize 16으로 4,800 epoch, 200,000 step 훈련한 결과입니다.
+　
 ## 프로그램 설치 및 코드, 체크포인트 다운로드
 1. 아나콘다3 설치 (https://www.anaconda.com/products/distribution)
     - 설치 과정에서 PATH환경변수 등록하기
