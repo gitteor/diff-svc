@@ -1,9 +1,9 @@
 # Diff-SVC
 ### Singing Voice Conversion via diffusion model
 
-　
-
-[![Video Label](https://i9.ytimg.com/vi_webp/0zHZ6WwA24E/mq2.webp?sqp=CKychaEG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFcgYChlMA8=&rs=AOn4CLBsTLXFNDFhQapG5qOU_f4J1fEgrw)](https://youtu.be/0zHZ6WwA24E)
+민경훈 AI 들어보세요 ↓↓
+https://youtu.be/0zHZ6WwA24E
+https://youtu.be/Qtjnddtb09Y
 
 음성데이터 2시간, RTX3060 12GB BatchSize 16으로 4,800 epoch, 200,000 step 총 36시간 훈련한 결과입니다.
 　
